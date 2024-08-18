@@ -4,7 +4,7 @@ const Header = () => {
         <>
             <ul>
                 <li><a class="active" href="/">Home</a></li>
-                <li><a href="/Users">Users</a></li>
+                <li><a href="/users">Users</a></li>
                 <li><a href="/product">Product</a></li>
             </ul>
 
