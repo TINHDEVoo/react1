@@ -1,8 +1,9 @@
-import { Table } from 'antd';
+import { notification, Popconfirm, Table } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.user.modal';
 import { useState } from 'react';
 import ViewUserModal from './view.user.detail';
+import { deleteUserApi } from '../../services/api.services';
 
 const UserTable = (props) => {
     const { dataUsers, loadUser } = props;
@@ -14,6 +15,23 @@ const UserTable = (props) => {
     const [isDetailOpen, setIsDetailOpen] = useState(false)
 
     const [dataUpdate, setDataUpdate] = useState(null)
+
+    const handleDeleteUser = async (id) => {
+        const res = await deleteUserApi(id);
+        if (res.data) {
+            notification.success({
+                message: "Delete User",
+                description: "Xoa User Thanh Cong"
+            })
+            await loadUser();
+        }
+        else {
+            notification.success({
+                message: "Error Delete User",
+                description: JSON.stringify(res.message)
+            })
+        }
+    }
 
     const columns = [
         {
@@ -49,8 +67,17 @@ const UserTable = (props) => {
                             setIsModalUpdateOpen(true);
                         }}
                         style={{ cursor: "pointer", color: "orange" }} />
-                    <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
-                </div>
+                    <Popconfirm
+                        title="Delete the task"
+                        description="Are you sure to delete this task?"
+                        onConfirm={() => handleDeleteUser(record._id)}
+                        okText="Yes"
+                        cancelText="No"
+                        placement="left"
+                    >
+                        <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+                    </Popconfirm>
+                </div >
             ),
         },
 
