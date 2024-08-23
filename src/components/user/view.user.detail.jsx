@@ -1,8 +1,9 @@
-import { Button, Drawer } from "antd";
+import { Button, Drawer, notification } from "antd";
 import { useState } from "react";
+import { handleUploadFile, updateUserAvatarAPI } from "../../services/api.services";
 
 const ViewUserModal = (props) => {
-    const { dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen } = props;
+    const { loadUser, dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen } = props;
     const [selectedFile, setSelectedFile] = useState(null)
     const [preview, setPreview] = useState(null)
     const handleOnChangeFile = (event) => {
@@ -17,6 +18,37 @@ const ViewUserModal = (props) => {
         if (file) {
             setSelectedFile(file)
             setPreview(URL.createObjectURL(file))
+        }
+    }
+    const handleUpdateUserAvatar = async () => {
+        //step1: upload file
+        const resUpload = await handleUploadFile(selectedFile, "avatar")
+        if (resUpload.data) {
+            const newAvatar = resUpload.data.fileUploaded;
+            //step2: update user
+            const resUpdateAvatar = await updateUserAvatarAPI(
+                newAvatar, dataDetail._id, dataDetail.fullName, dataDetail.phone)
+            if (resUpdateAvatar.data) {
+                setIsDetailOpen(false);
+                setSelectedFile(null)
+                setPreview(null)
+                await loadUser();
+                notification.success({
+                    message: "Update User Avatar",
+                    description: "Cap nhat thanh cong"
+                })
+            }
+            else {
+                notification.error({
+                    message: "Error Upload avatar",
+                    description: JSON.stringify(resUpdateAvatar.message)
+                })
+            }
+        } else {
+            notification.error({
+                message: "Error Upload file",
+                description: JSON.stringify(resUpload.message)
+            })
         }
     }
     console.log("Check file: ", preview)
@@ -60,10 +92,15 @@ const ViewUserModal = (props) => {
                         />
                     </div>
                     {preview &&
-                        <div>
-                            <img height={150} width={150}
-                                src={preview} alt="" />
-                        </div>
+                        <>
+                            <div style={{ marginTop: "15px" }}>
+                                <img height={150} width={150}
+                                    src={preview} alt="" />
+                            </div>
+                            <Button type="primary"
+                                onClick={() => handleUpdateUserAvatar()}
+                            >Save </Button>
+                        </>
                     }
                 </>
                     :
