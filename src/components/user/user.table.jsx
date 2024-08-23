@@ -6,7 +6,10 @@ import ViewUserModal from './view.user.detail';
 import { deleteUserApi } from '../../services/api.services';
 
 const UserTable = (props) => {
-    const { dataUsers, loadUser } = props;
+    const { dataUsers, loadUser,
+        current, pageSize, total,
+        setCurrent, setPageSize
+    } = props;
 
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
 
@@ -40,7 +43,7 @@ const UserTable = (props) => {
                 console.log(">> CHeck index ", index)
                 return (
                     <>
-                        {index + 1}
+                        {(index + 1) + (current - 1) * pageSize}
                     </>
                 )
             }
@@ -93,12 +96,39 @@ const UserTable = (props) => {
         },
 
     ];
+
+    const onChange = (pagination, filters, sorter, extra) => {
+        // setCurrent, setPageSie
+        // neu thay doi trang : current
+        if (pagination && pagination.current) {
+            if (+pagination.current !== +current) {
+                setCurrent(+pagination.current)
+            }
+        }
+
+        // neu thay doi tong so phan tu : [pageSize]
+        if (pagination && pagination.pageSize) {
+            if (+pagination.pageSize !== +pageSize) {
+                setPageSize(+pagination.pageSize)
+            }
+        }
+        console.log(">> check", pagination, filters, sorter, extra)
+    };
     return (
         <>
             <Table
                 columns={columns}
                 dataSource={dataUsers}
                 rowKey={"_id"}
+                pagination={
+                    {
+                        current: current,
+                        pageSize: pageSize,
+                        showSizeChanger: true,
+                        total: total,
+                        showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
+                    }}
+                onChange={onChange}
             />
             <UpdateUserModal
                 isModalUpdateOpen={isModalUpdateOpen}
