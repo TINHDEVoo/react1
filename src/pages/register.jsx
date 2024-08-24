@@ -1,6 +1,6 @@
-import { Button, Form, Input, notification, Row, Col } from "antd"
+import { Button, Form, Input, notification, Row, Col, Divider } from "antd"
 import { registerUserAPI } from "../services/api.services";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const RegisterPage = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
@@ -34,8 +34,14 @@ const RegisterPage = () => {
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
+                style={{
+                    padding: "50px",
+                }}
             // onFinishFailed={onFinishFailed}
             >
+                <Row justify={"center"}>
+                    <h3>Register</h3>
+                </Row>
                 <Row justify={"center"}>
                     <Col xs={24} md={12}>
                         <Form.Item
@@ -108,6 +114,10 @@ const RegisterPage = () => {
                                 type="primary">Register</Button>
                         </div>
                     </Col>
+                </Row>
+                <Row justify={"center"}>
+                    <Divider />
+                    <span>Đã có tài khoản?</span><Link to={"/login"}> Đăng nhập tại đây</Link>
                 </Row>
             </Form>
         </>
