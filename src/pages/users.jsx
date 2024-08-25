@@ -27,7 +27,7 @@ const UsersPage = () => {
             setTotal(res.data.meta.total)
         }
     }
-    console.log(">> Check pageSize: ", pageSize)
+    // console.log(">> Check pageSize: ", pageSize)
     return (
         <div style={{ padding: "20px" }}>
             <UserForm loadUser={loadUser} />

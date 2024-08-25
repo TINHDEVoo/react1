@@ -51,7 +51,7 @@ const ViewUserModal = (props) => {
             })
         }
     }
-    console.log("Check file: ", preview)
+    // console.log("Check file: ", preview)
     return (
         <Drawer
             title="View a User"

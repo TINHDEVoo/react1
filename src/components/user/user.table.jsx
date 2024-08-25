@@ -40,7 +40,7 @@ const UserTable = (props) => {
         {
             title: "STT",
             render: (_, record, index) => {
-                console.log(">> CHeck index ", index)
+                // console.log(">> CHeck index ", index)
                 return (
                     <>
                         {(index + 1) + (current - 1) * pageSize}
