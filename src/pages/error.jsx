@@ -5,12 +5,13 @@ export default function ErrorPage() {
     console.error(error);
     return (
         <Result
-            status="403"
+            status="404"
             title="Oops!"
             subTitle={error.statusText || error.message}
-            extra={<Button type="primary">                <Link to="/">
-                <span>Back To Home</span>
-            </Link></Button>}
+            extra={<Button type="primary">
+                <Link to="/">
+                    <span>Back To Home</span>
+                </Link></Button>}
         />
     );
 }

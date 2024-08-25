@@ -9,7 +9,7 @@ const Header = () => {
 
     const { user } = useContext(AuthContext);
 
-    console.log(">>>data; ", user)
+    // console.log(">>>data; ", user)
 
     const onClick = (e) => {
         console.log('click ', e);
