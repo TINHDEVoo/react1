@@ -1,6 +1,5 @@
 .footer {
-    position: static;
-    left: 0;
+    position: relative;
     bottom: 0;
     width: 100%;
     background-color: #ccc;

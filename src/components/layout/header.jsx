@@ -1,10 +1,16 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Menu } from 'antd'
 import { UsergroupAddOutlined, HomeOutlined, AuditOutlined, SettingOutlined } from '@ant-design/icons';
-import { Children, useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 const Header = () => {
     const [current, setCurrent] = useState('');
+
+    const { user } = useContext(AuthContext);
+
+    console.log(">>>data; ", user)
+
     const onClick = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
@@ -31,7 +37,7 @@ const Header = () => {
             label: 'Cài đặt',
             key: 'setting',
             icon: <SettingOutlined />,
-            Children: [
+            children: [
                 {
                     label: <Link to={("/login")}>Đăng Nhập</Link>,
                     key: 'login'
