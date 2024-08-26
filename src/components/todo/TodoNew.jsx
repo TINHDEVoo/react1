@@ -4,7 +4,7 @@ const TodoNew = (props) => {
 
     //useState hook (getter/setter)
     // const valueInput = "eric";
-    const [valueInput, setValueInput] = useState("eric")
+    const [valueInput, setValueInput] = useState("hoidanit")
 
     const { addNewTodo } = props;
 
