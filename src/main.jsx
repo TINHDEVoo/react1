@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <UsersPage />
       },
       {
-        path: "/book",
+        path: "/books",
         element:
           <PrivateRoute>
             <BookPage />
